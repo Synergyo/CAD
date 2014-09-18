@@ -12,7 +12,8 @@ import javax.swing.border.EmptyBorder;
  */
 
 //GitHub test
-//	githuuuub
+//	GitHub test 2
+
 
 public class Gui extends JFrame {
 
