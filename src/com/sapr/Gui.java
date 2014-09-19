@@ -2,6 +2,7 @@ package com.sapr;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,7 +23,7 @@ public class Gui extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -33,6 +34,7 @@ public class Gui extends JFrame {
 				}
 			}
 		});
+        Model model = new Model("D:\\IDEA Workspace\\CAD\\file.dgt");
 	}
 
 	/**
