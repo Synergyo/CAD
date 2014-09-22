@@ -1,0 +1,27 @@
+  mass=array[0..99] of real;
+  mass1=array[1..40] of mass;
+  TNum = array[1..40] of integer;
+
+  xd,yd: mass1;
+  n:TNum; //количество точек (вершин) в каждой детали
+  kv:array[1..40] of integer; //количество вершин
+  name_d:array[1..40] of string; //имя детали
+  kd:integer; //количество деталей
+  model: string; // имя модели
+  Xc, Yc, Ddet, Shdet: array[0..40] of real; //центр по х и центр у; длина детали и ширина детали
+  XcO, YcO: real; //центр объекта (модели) ?
+  mxyim2, mashtab: real;
+  pv: integer;
+  mashDet,Xa,Ya,Xb,Yb: real;
+  prBn2, prBn3, prBn4,prBn5, prBn6, prBn7, prBn8, prBn9 : boolean; //признаки кнопок
+  Xp, Yp: real;
+  np : integer;
+  prLeft, prRight, prVoodIm, prVood: boolean;
+  nn, nk,X1,Y1,X2,Y2: integer;
+  pr: integer;
+  Sh_Im, H_Im: real; //ширина и высота имэйджа
+  mx, my: real; //масштаб по х и у
+  x_d, y_d: array[0..100] of real; //массивы координат х и у детали
+  kp: integer;
+  S:array [1..40] of real;
+  Perio:array [1..40] of real;
