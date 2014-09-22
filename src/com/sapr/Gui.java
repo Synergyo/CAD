@@ -12,8 +12,8 @@ import javax.swing.border.EmptyBorder;
  * Created by Vlad Rozhenko on 17.09.2014.
  */
 
-//GitHub test
-//	GitHub test 2
+//----->
+    
 
 
 public class Gui extends JFrame {
