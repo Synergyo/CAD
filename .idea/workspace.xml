@@ -29,12 +29,12 @@
       <file leaf-file-name="Gui.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/sapr/Gui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.0954003" vertical-offset="0" max-vertical-offset="1695">
-              <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.33560476" vertical-offset="2023" max-vertical-offset="2610">
+              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#533#708#0" expanded="true" />
-                <element signature="e#703#704#0" expanded="true" />
+                <element signature="e#606#781#0" expanded="true" />
+                <element signature="e#776#777#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -398,7 +398,11 @@
       <created>1411457482795</created>
       <updated>1411457482795</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Еще чуть поменял интерфейс">
+      <created>1411458063067</created>
+      <updated>1411458063067</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -447,7 +451,8 @@
     </option>
     <MESSAGE value="first commit from idea" />
     <MESSAGE value="Add some interface" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add some interface" />
+    <MESSAGE value="Еще чуть поменял интерфейс" />
+    <option name="LAST_COMMIT_MESSAGE" value="Еще чуть поменял интерфейс" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -465,8 +470,8 @@
           <caret line="15" column="1" selection-start-line="15" selection-start-column="1" selection-end-line="15" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -509,8 +514,8 @@
           <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -545,8 +550,8 @@
           <caret line="43" column="55" selection-start-line="43" selection-start-column="55" selection-end-line="43" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -581,8 +586,8 @@
           <caret line="35" column="32" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="67" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -609,8 +614,8 @@
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -637,8 +642,8 @@
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -665,8 +670,8 @@
           <caret line="40" column="18" selection-start-line="40" selection-start-column="18" selection-end-line="40" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -677,8 +682,8 @@
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -725,12 +730,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/sapr/Gui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.0954003" vertical-offset="0" max-vertical-offset="1695">
-          <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.33560476" vertical-offset="2023" max-vertical-offset="2610">
+          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#533#708#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#606#781#0" expanded="true" />
+            <element signature="e#776#777#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -3,6 +3,8 @@ package com.sapr;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
@@ -100,6 +102,65 @@ public class Gui extends JFrame {
         menu_bar.add(menu);
 
         //menu--------------------------------------
+
+        //window listener---------------------------
+
+        addWindowListener(new WindowListener() {
+
+            @Override
+            public void windowOpened(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent event) {
+
+                Object[] options = { "Yes", "No" };
+                int n = JOptionPane.showOptionDialog(event.getWindow(), "Quit the program?",
+                        "Confirm action", JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options,
+                        options[0]);
+                if (n == 0) {
+                    System.exit(0);
+                } else {
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+
+            }
+
+            @Override
+            public void windowClosed(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+        //window listener --------------------------------
 
 
 	}
