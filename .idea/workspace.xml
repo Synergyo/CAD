@@ -29,8 +29,8 @@
       <file leaf-file-name="Gui.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/sapr/Gui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13117547" vertical-offset="268" max-vertical-offset="1620">
-              <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+            <state vertical-scroll-proportion="2.0954003" vertical-offset="0" max-vertical-offset="1695">
+              <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#533#708#0" expanded="true" />
@@ -394,7 +394,11 @@
       <created>1411123982791</created>
       <updated>1411123982791</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add some interface">
+      <created>1411457482795</created>
+      <updated>1411457482795</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -442,7 +446,8 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="first commit from idea" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit from idea" />
+    <MESSAGE value="Add some interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add some interface" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -720,8 +725,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/sapr/Gui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13117547" vertical-offset="268" max-vertical-offset="1620">
-          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+        <state vertical-scroll-proportion="2.0954003" vertical-offset="0" max-vertical-offset="1695">
+          <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#533#708#0" expanded="true" />

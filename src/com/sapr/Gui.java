@@ -78,14 +78,19 @@ public class Gui extends JFrame {
 
         JMenu menu = new JMenu("Menu");
 
-        menu.addSeparator();
+        //menu.addSeparator();
+        //menu.addSeparator();
+        //menu.addSeparator();
+
         JMenu sub_menu = new JMenu("Items");
 
         JMenuItem menuItem_1 = new JMenuItem("Item 1");
         sub_menu.add(menuItem_1);
+        sub_menu.addSeparator();
 
         JMenuItem menuItem_2 = new JMenuItem("Item 2");
         sub_menu.add(menuItem_2);
+        sub_menu.addSeparator();
 
         JMenuItem menuItem_3 = new JMenuItem("Item 2");
         sub_menu.add(menuItem_3);
