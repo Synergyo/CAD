@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -16,12 +17,14 @@ import javax.swing.border.EmptyBorder;
  */
 
 //Trying to make some interface. Alekov
+//Grisha heranyl LookAndFeel =)
     
 
 
 public class Gui extends JFrame {
 
 	private JPanel contentPane;
+    private Model model; //хз, может не тут стоит объявлять? чё скажете, посоны? (Гриша)
 
 	/**
 	 * Launch the application.
@@ -45,13 +48,27 @@ public class Gui extends JFrame {
 	 * Create the frame.
 	 */
 	public Gui() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
         setLayout(new BorderLayout());
+
+        //Look and Feel
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e2) {
+            e2.printStackTrace();
+        } catch (InstantiationException e2) {
+            e2.printStackTrace();
+        } catch (IllegalAccessException e2) {
+            e2.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e2) {
+            e2.printStackTrace();
+        }
+        //Look and Feel
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -78,13 +95,65 @@ public class Gui extends JFrame {
         JMenuBar menu_bar = new JMenuBar();
         add(menu_bar, BorderLayout.NORTH);
 
-        JMenu menu = new JMenu("Menu");
+        JMenu menu = new JMenu("File");
+
+        JMenuItem menuItem_1 = new JMenuItem("Open");
+
+        menuItem_1.addActionListener(new Action() {
+            @Override
+            public Object getValue(String key) {
+                return null;
+            }
+
+            @Override
+            public void putValue(String key, Object value) {
+
+            }
+
+            @Override
+            public void setEnabled(boolean b) {
+
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return false;
+            }
+
+            @Override
+            public void addPropertyChangeListener(PropertyChangeListener listener) {
+
+            }
+
+            @Override
+            public void removePropertyChangeListener(PropertyChangeListener listener) {
+
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //открываем диалогвое окно с выбором файла, читаем файл и заносим информацию в объект model
+                JFileChooser fc = new JFileChooser();
+
+                if(fc.showOpenDialog(Gui.this) == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+
+                    try {
+                        model = new Model(file.getAbsolutePath());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        menu.add(menuItem_1);
 
         //menu.addSeparator();
         //menu.addSeparator();
         //menu.addSeparator();
 
-        JMenu sub_menu = new JMenu("Items");
+        /*JMenu sub_menu = new JMenu("Items");
 
         JMenuItem menuItem_1 = new JMenuItem("Item 1");
         sub_menu.add(menuItem_1);
@@ -94,10 +163,10 @@ public class Gui extends JFrame {
         sub_menu.add(menuItem_2);
         sub_menu.addSeparator();
 
-        JMenuItem menuItem_3 = new JMenuItem("Item 2");
-        sub_menu.add(menuItem_3);
+        JMenuItem menuItem_3 = new JMenuItem("Item 3");
+        sub_menu.add(menuItem_3);*/
 
-        menu.add(sub_menu);
+        menu.add(menuItem_1);
 
         menu_bar.add(menu);
 
