@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 //Trying to make some interface. Alekov
 //Grisha heranyl LookAndFeel =)
+//Чутка поправил конструктор главного фрейма. Саня
     
 
 
@@ -48,13 +49,15 @@ public class Gui extends JFrame {
 	 * Create the frame.
 	 */
 	public Gui() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+
+        //contentPane = new JPanel();
+        //contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        //contentPane.setLayout(new BorderLayout(0, 0));
+        //setContentPane(contentPane);
+
+        setPreferredSize(new Dimension(1200,800));
         setLayout(new BorderLayout());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Look and Feel
         try {
@@ -76,7 +79,7 @@ public class Gui extends JFrame {
 
         //tabs--------------------------------------
 
-        JPanel first_panel = new JPanel();
+        final JPanel first_panel = new JPanel();
         first_panel.setLayout(new GridLayout(2,2));
 
         JPanel second_panel = new JPanel();
@@ -178,25 +181,25 @@ public class Gui extends JFrame {
 
             @Override
             public void windowOpened(WindowEvent arg0) {
-                // TODO Auto-generated method stub
+
 
             }
 
             @Override
             public void windowIconified(WindowEvent arg0) {
-                // TODO Auto-generated method stub
+
 
             }
 
             @Override
             public void windowDeiconified(WindowEvent arg0) {
-                // TODO Auto-generated method stub
+
 
             }
 
             @Override
             public void windowDeactivated(WindowEvent arg0) {
-                // TODO Auto-generated method stub
+
 
             }
 
@@ -218,19 +221,18 @@ public class Gui extends JFrame {
 
             @Override
             public void windowClosed(WindowEvent arg0) {
-                // TODO Auto-generated method stub
+
 
             }
 
             @Override
             public void windowActivated(WindowEvent arg0) {
-                // TODO Auto-generated method stub
+
 
             }
         });
 
         //window listener --------------------------------
-
 
 	}
 
