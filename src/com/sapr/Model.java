@@ -1,6 +1,7 @@
 package com.sapr;
 
 import java.io.*;
+import java.util.Arrays;
 
 /**
  * Created by Григорий on 18.09.2014.
@@ -60,4 +61,8 @@ public class Model {
             e.printStackTrace();
         }
     }
+
+	public void testModelVars() {
+		System.out.println("name: " + this.name + " | numDetails: " + this.numDetails +  " | details: " + Arrays.toString(this.details));
+	}
 }
