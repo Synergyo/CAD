@@ -16,15 +16,15 @@ import javax.swing.border.EmptyBorder;
  * Created on 17.09.2014.
  */
 
-//Grisha heranyl LookAndFeel =)
-
-
-
 public class Gui extends JFrame {
 
 	private JPanel contentPane;
 	private static Model model; //хз, может не тут стоит объявлять? чё скажете, посоны? (Гриша)
 	private PaintPanel paintPanel;
+    private static JScrollPane detail_scroll_panel;
+    private static DetailPanel panel_1;
+    private static DetailBox [] sideButtons;
+    private static PaintPanel panel;
 
 	/**
 	 * Launch the application.
@@ -41,7 +41,6 @@ public class Gui extends JFrame {
 				}
 			}
 		});
-		//Model model = new Model("D:\\IDEA Workspace\\CAD\\file.dgt");
 	}
 
 	/**
@@ -58,6 +57,7 @@ public class Gui extends JFrame {
         // минимизации окно оно будет очень маленьким
 
 //      1) не работает 2) 800 ширины както не кошерно, у Грифона ноут 1366х768 3) у меня 1920x1080, пусть луше фуллскрин остается
+        //посоны, когда чатимся в комментах, давайте подписыватся)) а то хз кто коммент оставил)) Гриша
 
 		//Look and Feel
 		try {
@@ -90,10 +90,9 @@ public class Gui extends JFrame {
 //		PaintPanel panel = new PaintPanel();
 //		first_panel.add(panel, BorderLayout.CENTER);
 
-		DetailPanel panel_1 = new DetailPanel();
-		Dimension dim = new Dimension(150, panel_1.getHeight());
+		panel_1 = new DetailPanel();
+		Dimension dim = new Dimension(120, panel_1.getHeight());
 		panel_1.setPreferredSize(dim);
-
 
 		JPanel panel_2 = new JPanel();
 		first_panel.add(panel_2, BorderLayout.SOUTH);
@@ -115,7 +114,7 @@ public class Gui extends JFrame {
 
         //scroll panels -------------------------------
 
-        JScrollPane detail_scroll_panel = new JScrollPane(panel_1);
+        detail_scroll_panel = new JScrollPane(panel_1);
         detail_scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         first_panel.add(detail_scroll_panel, BorderLayout.EAST);
 
@@ -169,6 +168,8 @@ public class Gui extends JFrame {
 
 //				Просто для удобства, чтоб не заходить каждый раз в папку
 //				а так просто File -> Open -> и тыцяем ентер
+
+                //У нас то пути на компах отличаются =) Гриша
 				File f = null;
 				try {
 					f = new File(new File("D:\\Programming\\IDEA\\CAD\\file.dgt").getCanonicalPath());
@@ -183,8 +184,57 @@ public class Gui extends JFrame {
 
 					try {
 						model = new Model(file.getAbsolutePath());
-						PaintPanel panel = new PaintPanel();
-						first_panel.add(panel, BorderLayout.CENTER);
+
+                        panel = new PaintPanel();
+                        first_panel.add(panel, BorderLayout.CENTER);
+                        Gui.panel.setPaintMode(-1);
+
+                        //добавляем кнопки на боковую панель
+                        panel_1.setLayout(new GridLayout(model.numDetails, 1, 120, 120));
+                        //panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+                        sideButtons = new DetailBox[model.numDetails];
+                        for(int i = 0; i < model.numDetails; i++) {
+                            sideButtons[i] = new DetailBox(i);
+                            panel_1.add(sideButtons[i]);
+                            final int val = i;
+                            sideButtons[i].addActionListener(new Action() {
+                                @Override
+                                public Object getValue(String key) {
+                                    return null;
+                                }
+
+                                @Override
+                                public void putValue(String key, Object value) {
+
+                                }
+
+                                @Override
+                                public void setEnabled(boolean b) {
+
+                                }
+
+                                @Override
+                                public boolean isEnabled() {
+                                    return false;
+                                }
+
+                                @Override
+                                public void addPropertyChangeListener(PropertyChangeListener listener) {
+
+                                }
+
+                                @Override
+                                public void removePropertyChangeListener(PropertyChangeListener listener) {
+
+                                }
+
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    Gui.panel.setPaintMode(val);
+                                }
+                            });
+                        }
+
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
