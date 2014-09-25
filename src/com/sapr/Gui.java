@@ -16,9 +16,7 @@ import javax.swing.border.EmptyBorder;
  * Created on 17.09.2014.
  */
 
-//Trying to make some interface. Alekov
 //Grisha heranyl LookAndFeel =)
-//Чутка поправил конструктор главного фрейма. Саня
 
 
 
@@ -55,8 +53,11 @@ public class Gui extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+
+        setSize(new Dimension(1200,800)); //- это размер окна когда минимизируешь его, если это убрать то при
+        // минимизации окно оно будет очень маленьким
+
 //      1) не работает 2) 800 ширины както не кошерно, у Грифона ноут 1366х768 3) у меня 1920x1080, пусть луше фуллскрин остается
-//		setPreferredSize(new Dimension(1200,800));
 
 		//Look and Feel
 		try {
@@ -92,7 +93,7 @@ public class Gui extends JFrame {
 		DetailPanel panel_1 = new DetailPanel();
 		Dimension dim = new Dimension(100, panel_1.getHeight());
 		panel_1.setPreferredSize(dim);
-		first_panel.add(panel_1, BorderLayout.EAST);
+
 
 		JPanel panel_2 = new JPanel();
 		first_panel.add(panel_2, BorderLayout.SOUTH);
@@ -111,6 +112,15 @@ public class Gui extends JFrame {
 		tab_panel.addTab("Panel 2", second_panel);
 
 		//tabs--------------------------------------
+
+        //scroll panels -------------------------------
+
+        JScrollPane detail_scroll_panel = new JScrollPane(panel_1);
+        detail_scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        first_panel.add(detail_scroll_panel, BorderLayout.EAST);
+
+        //доделать для основной панели
+        //scroll panel -------------------------------
 
 		//menu--------------------------------------
 
