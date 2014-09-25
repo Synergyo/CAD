@@ -91,7 +91,7 @@ public class Gui extends JFrame {
 //		first_panel.add(panel, BorderLayout.CENTER);
 
 		DetailPanel panel_1 = new DetailPanel();
-		Dimension dim = new Dimension(100, panel_1.getHeight());
+		Dimension dim = new Dimension(150, panel_1.getHeight());
 		panel_1.setPreferredSize(dim);
 
 

@@ -12,7 +12,8 @@ public class DetailPanel extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 
-		g2d.drawLine(0, 0, this.getWidth(), this.getHeight());
+        this.setBackground(Color.WHITE);
+		//g2d.drawLine(0, 0, this.getWidth(), this.getHeight());
 	}
 
 }
