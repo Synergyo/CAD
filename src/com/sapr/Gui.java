@@ -1,10 +1,7 @@
 package com.sapr;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +51,7 @@ public class Gui extends JFrame {
 		setContentPane(contentPane);
 
         setSize(new Dimension(1200,800)); //- это размер окна когда минимизируешь его, если это убрать то при
-        // минимизации окно оно будет очень маленьким
+        // минимизации окно оно будет очень маленьким. Саня
 
 //      1) не работает 2) 800 ширины както не кошерно, у Грифона ноут 1366х768 3) у меня 1920x1080, пусть луше фуллскрин остается
         //посоны, когда чатимся в комментах, давайте подписыватся)) а то хз кто коммент оставил)) Гриша
@@ -97,7 +94,7 @@ public class Gui extends JFrame {
 		JPanel panel_2 = new JPanel();
 		first_panel.add(panel_2, BorderLayout.SOUTH);
 
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Test");
 		panel_2.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("New button");
@@ -114,11 +111,11 @@ public class Gui extends JFrame {
 
         //scroll panels -------------------------------
 
+        //Проверить работу скролл бара. Саня
         detail_scroll_panel = new JScrollPane(panel_1);
         detail_scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         first_panel.add(detail_scroll_panel, BorderLayout.EAST);
 
-        //доделать для основной панели
         //scroll panel -------------------------------
 
 		//menu--------------------------------------
@@ -128,7 +125,7 @@ public class Gui extends JFrame {
 
 		JMenu menu = new JMenu("File");
 
-		JMenuItem menuItem_1 = new JMenuItem("Open");
+		JMenuItem menuItem_1 = new JMenuItem("Open (Ctrl + O)");
 
 		menuItem_1.addActionListener(new Action() {
 			@Override
@@ -172,7 +169,7 @@ public class Gui extends JFrame {
                 //У нас то пути на компах отличаются =) Гриша
 				File f = null;
 				try {
-					f = new File(new File("D:\\Programming\\IDEA\\CAD\\file.dgt").getCanonicalPath());
+					f = new File(new File("file.dgt").getCanonicalPath());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -327,6 +324,118 @@ public class Gui extends JFrame {
 
 		//window listener --------------------------------
 		*/
+
+
+
+
+        btnNewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                JOptionPane.showMessageDialog(first_panel, "alert", "alert", JOptionPane.ERROR_MESSAGE);
+
+
+
+            }
+        });
+
+
+
+        //key listener. Саня
+
+        tab_panel.addKeyListener(new KeyAdapter() {
+
+            public void keyPressed(KeyEvent e) {
+
+                if (e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
+                    //JOptionPane.showMessageDialog(null, "alert", "alert", JOptionPane.ERROR_MESSAGE);
+
+
+                //СОРРИ ЗА ГОВНОКОД, ПОТОМ ПЕРЕДЕЛАЮ
+
+
+                        JFileChooser fc = new JFileChooser();
+                        File f = null;
+
+                    try {
+                        f = new File(new File("file.dgt").getCanonicalPath()); //Вот так тоже сразу в фолдер проекта прыгает
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    fc.setSelectedFile(f);
+
+
+
+                        if(fc.showOpenDialog(Gui.this) == JFileChooser.APPROVE_OPTION) {
+                            File file = fc.getSelectedFile();
+
+                            try {
+                                model = new Model(file.getAbsolutePath());
+
+                                panel = new PaintPanel();
+                                first_panel.add(panel, BorderLayout.CENTER);
+                                Gui.panel.setPaintMode(-1);
+
+                                panel_1.setLayout(new GridLayout(model.numDetails, 1, 120, 120));
+                                sideButtons = new DetailBox[model.numDetails];
+                                for(int i = 0; i < model.numDetails; i++) {
+                                    sideButtons[i] = new DetailBox(i);
+                                    panel_1.add(sideButtons[i]);
+                                    final int val = i;
+                                    sideButtons[i].addActionListener(new Action() {
+                                        @Override
+                                        public Object getValue(String key) {
+                                            return null;
+                                        }
+
+                                        @Override
+                                        public void putValue(String key, Object value) {
+
+                                        }
+
+                                        @Override
+                                        public void setEnabled(boolean b) {
+
+                                        }
+
+                                        @Override
+                                        public boolean isEnabled() {
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public void addPropertyChangeListener(PropertyChangeListener listener) {
+
+                                        }
+
+                                        @Override
+                                        public void removePropertyChangeListener(PropertyChangeListener listener) {
+
+                                        }
+
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            Gui.panel.setPaintMode(val);
+                                        }
+                                    });
+                                }
+
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+
+
+
+
+
+                }
+            }
+
+
+        });
+
 	}
 
 	/**
