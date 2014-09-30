@@ -43,8 +43,6 @@ public class Gui extends JFrame {
     /**
      * Create the frame.
      */
-
-    
     public Gui() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         contentPane = new JPanel();
