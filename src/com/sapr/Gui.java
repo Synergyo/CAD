@@ -15,40 +15,40 @@ import javax.swing.border.EmptyBorder;
 
 public class Gui extends JFrame {
 
-	private JPanel contentPane;
-	private static Model model; //хз, может не тут стоит объявлять? чё скажете, посоны? (Гриша)
-	private PaintPanel paintPanel;
+    private JPanel contentPane;
+    private static Model model; //хз, может не тут стоит объявлять? чё скажете, посоны? (Гриша)
+    private PaintPanel paintPanel;
     private static JScrollPane detail_scroll_panel;
     private static DetailPanel panel_1;
     private static DetailBox [] sideButtons;
     private static PaintPanel panel;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) throws IOException {
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) throws IOException {
 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Gui frame = new Gui();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Gui frame = new Gui();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-	/**
-	 * Create the frame.
-	 */
-	public Gui() {
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+    /**
+     * Create the frame.
+     */
+    public Gui() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(new BorderLayout(0, 0));
+        setContentPane(contentPane);
 
         setSize(new Dimension(1200,800)); //- это размер окна когда минимизируешь его, если это убрать то при
         // минимизации окно оно будет очень маленьким. Саня
@@ -56,131 +56,124 @@ public class Gui extends JFrame {
 //      1) не работает 2) 800 ширины както не кошерно, у Грифона ноут 1366х768 3) у меня 1920x1080, пусть луше фуллскрин остается
         //посоны, когда чатимся в комментах, давайте подписыватся)) а то хз кто коммент оставил)) Гриша
 
-		//Look and Feel
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e2) {
-			e2.printStackTrace();
-		} catch (InstantiationException e2) {
-			e2.printStackTrace();
-		} catch (IllegalAccessException e2) {
-			e2.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e2) {
-			e2.printStackTrace();
-		}
-		//Look and Feel
+        //Look and Feel
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e2) {
+            e2.printStackTrace();
+        } catch (InstantiationException e2) {
+            e2.printStackTrace();
+        } catch (IllegalAccessException e2) {
+            e2.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e2) {
+            e2.printStackTrace();
+        }
+        //Look and Feel
 
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		setTitle("Some name of our project");
+        setTitle("Some name of our project");
 
-		JPanel second_panel = new JPanel();
-		second_panel.setLayout(new GridLayout(2,2));
+        JPanel second_panel = new JPanel();
+        second_panel.setLayout(new GridLayout(2,2));
 
-		JTabbedPane tab_panel = new JTabbedPane();
-		contentPane.add(tab_panel, BorderLayout.CENTER);
+        final JTabbedPane tab_panel = new JTabbedPane();
+        contentPane.add(tab_panel, BorderLayout.CENTER);
 
-		final JPanel first_panel = new JPanel();
-		tab_panel.addTab("Panel 1", null, first_panel, null);
-		first_panel.setLayout(new BorderLayout(0, 0));
+        final JPanel first_panel = new JPanel();
+        tab_panel.addTab("Panel 1", null, first_panel, null);
+        first_panel.setLayout(new BorderLayout(0, 0));
 
 //		PaintPanel panel = new PaintPanel();
 //		first_panel.add(panel, BorderLayout.CENTER);
 
-		panel_1 = new DetailPanel();
-		Dimension dim = new Dimension(120, panel_1.getHeight());
-		panel_1.setPreferredSize(dim);
+        panel_1 = new DetailPanel();
+        Dimension dim = new Dimension(120, panel_1.getHeight());
+        panel_1.setPreferredSize(dim);
+        first_panel.add(panel_1, BorderLayout.EAST);
 
-		JPanel panel_2 = new JPanel();
-		first_panel.add(panel_2, BorderLayout.SOUTH);
+        JPanel panel_2 = new JPanel();
+        first_panel.add(panel_2, BorderLayout.SOUTH);
 
-		JButton btnNewButton = new JButton("Test");
-		panel_2.add(btnNewButton);
+        JButton btnNewButton = new JButton("Test");
+        panel_2.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("New button");
-		panel_2.add(btnNewButton_1);
+        JButton btnNewButton_1 = new JButton("New button");
+        panel_2.add(btnNewButton_1);
 
-		JButton btnNewButton_2 = new JButton("New button");
-		panel_2.add(btnNewButton_2);
+        JButton btnNewButton_2 = new JButton("New button");
+        panel_2.add(btnNewButton_2);
 
-		JButton btnNewButton_3 = new JButton("New button");
-		panel_2.add(btnNewButton_3);
-		tab_panel.addTab("Panel 2", second_panel);
+        JButton btnNewButton_3 = new JButton("New button");
+        panel_2.add(btnNewButton_3);
+        tab_panel.addTab("Panel 2", second_panel);
 
-		//tabs--------------------------------------
+        //tabs--------------------------------------
 
         //scroll panels -------------------------------
 
         //Проверить работу скролл бара. Саня
-        detail_scroll_panel = new JScrollPane(panel_1);
-        detail_scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        first_panel.add(detail_scroll_panel, BorderLayout.EAST);
+        //detail_scroll_panel = new JScrollPane(panel_1);
+        //detail_scroll_panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //first_panel.add(detail_scroll_panel, BorderLayout.EAST);
 
-        //scroll panel -------------------------------
+        //scroll panels -------------------------------
 
-		//menu--------------------------------------
+        //menu--------------------------------------
 
-		JMenuBar menu_bar = new JMenuBar();
-		contentPane.add(menu_bar, BorderLayout.NORTH);
+        JMenuBar menu_bar = new JMenuBar();
+        contentPane.add(menu_bar, BorderLayout.NORTH);
 
-		JMenu menu = new JMenu("File");
+        JMenu menu = new JMenu("File");
 
-		JMenuItem menuItem_1 = new JMenuItem("Open (Ctrl + O)");
+        JMenuItem menuItem_1 = new JMenuItem("Open (Ctrl + O)");
 
-		menuItem_1.addActionListener(new Action() {
-			@Override
-			public Object getValue(String key) {
-				return null;
-			}
+        menuItem_1.addActionListener(new Action() {
+            @Override
+            public Object getValue(String key) {
+                return null;
+            }
 
-			@Override
-			public void putValue(String key, Object value) {
+            @Override
+            public void putValue(String key, Object value) { }
 
-			}
+            @Override
+            public void setEnabled(boolean b) { }
 
-			@Override
-			public void setEnabled(boolean b) {
+            @Override
+            public boolean isEnabled() {
+                return false;
+            }
 
-			}
+            @Override
+            public void addPropertyChangeListener(PropertyChangeListener listener) { }
 
-			@Override
-			public boolean isEnabled() {
-				return false;
-			}
+            @Override
+            public void removePropertyChangeListener(PropertyChangeListener listener) { }
 
-			@Override
-			public void addPropertyChangeListener(PropertyChangeListener listener) {
-
-			}
-
-			@Override
-			public void removePropertyChangeListener(PropertyChangeListener listener) {
-
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//открываем диалогвое окно с выбором файла, читаем файл и заносим информацию в объект model
-				JFileChooser fc = new JFileChooser();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //открываем диалогвое окно с выбором файла, читаем файл и заносим информацию в объект model
+                JFileChooser fc = new JFileChooser();
 
 //				Просто для удобства, чтоб не заходить каждый раз в папку
 //				а так просто File -> Open -> и тыцяем ентер
 
                 //У нас то пути на компах отличаются =) Гриша
-				File f = null;
-				try {
-					f = new File(new File("file.dgt").getCanonicalPath());
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				fc.setSelectedFile(f);
+                File f = null;
+                try {
+                    f = new File(new File("file.dgt").getCanonicalPath());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                fc.setSelectedFile(f);
 //				Конец удобства
 
-				if(fc.showOpenDialog(Gui.this) == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
+                if(fc.showOpenDialog(Gui.this) == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
 
-					try {
-						model = new Model(file.getAbsolutePath());
+                    try {
+                        model = new Model(file.getAbsolutePath());
 
                         panel = new PaintPanel();
                         first_panel.add(panel, BorderLayout.CENTER);
@@ -190,6 +183,7 @@ public class Gui extends JFrame {
                         panel_1.setLayout(new GridLayout(model.numDetails, 1, 120, 120));
                         //panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
                         sideButtons = new DetailBox[model.numDetails];
+
                         for(int i = 0; i < model.numDetails; i++) {
                             sideButtons[i] = new DetailBox(i);
                             panel_1.add(sideButtons[i]);
@@ -202,12 +196,10 @@ public class Gui extends JFrame {
 
                                 @Override
                                 public void putValue(String key, Object value) {
-
                                 }
 
                                 @Override
                                 public void setEnabled(boolean b) {
-
                                 }
 
                                 @Override
@@ -217,12 +209,10 @@ public class Gui extends JFrame {
 
                                 @Override
                                 public void addPropertyChangeListener(PropertyChangeListener listener) {
-
                                 }
 
                                 @Override
                                 public void removePropertyChangeListener(PropertyChangeListener listener) {
-
                                 }
 
                                 @Override
@@ -231,19 +221,18 @@ public class Gui extends JFrame {
                                 }
                             });
                         }
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
 
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-		});
+        menu.add(menuItem_1);
 
-		menu.add(menuItem_1);
-
-		//menu.addSeparator();
-		//menu.addSeparator();
-		//menu.addSeparator();
+        //menu.addSeparator();
+        //menu.addSeparator();
+        //menu.addSeparator();
 
         /*JMenu sub_menu = new JMenu("Items");
 
@@ -258,11 +247,11 @@ public class Gui extends JFrame {
         JMenuItem menuItem_3 = new JMenuItem("Item 3");
         sub_menu.add(menuItem_3);*/
 
-		menu.add(menuItem_1);
+        menu.add(menuItem_1);
 
-		menu_bar.add(menu);
+        menu_bar.add(menu);
 
-		//menu--------------------------------------
+        //menu--------------------------------------
 
 		/* Пока нафиг не надо, только мешает дебажить
 		//window listener---------------------------
@@ -325,18 +314,10 @@ public class Gui extends JFrame {
 		//window listener --------------------------------
 		*/
 
-
-
-
         btnNewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 JOptionPane.showMessageDialog(first_panel, "alert", "alert", JOptionPane.ERROR_MESSAGE);
-
-
-
             }
         });
 
@@ -346,104 +327,107 @@ public class Gui extends JFrame {
 
         tab_panel.addKeyListener(new KeyAdapter() {
 
-            public void keyPressed(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
 
                 if (e.getKeyCode() == KeyEvent.VK_O && e.isControlDown()) {
-                    //JOptionPane.showMessageDialog(null, "alert", "alert", JOptionPane.ERROR_MESSAGE);
 
-
-                //СОРРИ ЗА ГОВНОКОД, ПОТОМ ПЕРЕДЕЛАЮ
-
-
-                        JFileChooser fc = new JFileChooser();
-                        File f = null;
+                    JFileChooser fc = new JFileChooser();
+                    File f = null;
 
                     try {
-                        f = new File(new File("file.dgt").getCanonicalPath()); //Вот так тоже сразу в фолдер проекта прыгает
+                        f = new File(new File("file.dgt").getCanonicalPath());
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                     fc.setSelectedFile(f);
 
+                    if (fc.showOpenDialog(Gui.this) == JFileChooser.APPROVE_OPTION) {
+                        File file = fc.getSelectedFile();
 
+                        try {
+                            model = new Model(file.getAbsolutePath());
+                            panel = new PaintPanel();
+                            first_panel.add(panel, BorderLayout.CENTER);
+                            Gui.panel.setPaintMode(-1);
 
-                        if(fc.showOpenDialog(Gui.this) == JFileChooser.APPROVE_OPTION) {
-                            File file = fc.getSelectedFile();
+                            panel_1.setLayout(new GridLayout(model.numDetails, 1, 120, 120));
+                            sideButtons = new DetailBox[model.numDetails];
+                            for (int i = 0; i < model.numDetails; i++) {
 
-                            try {
-                                model = new Model(file.getAbsolutePath());
+                                sideButtons[i] = new DetailBox(i);
 
-                                panel = new PaintPanel();
-                                first_panel.add(panel, BorderLayout.CENTER);
-                                Gui.panel.setPaintMode(-1);
+                                sideButtons[i].addFocusListener(new FocusListener() {
 
-                                panel_1.setLayout(new GridLayout(model.numDetails, 1, 120, 120));
-                                sideButtons = new DetailBox[model.numDetails];
-                                for(int i = 0; i < model.numDetails; i++) {
-                                    sideButtons[i] = new DetailBox(i);
-                                    panel_1.add(sideButtons[i]);
-                                    final int val = i;
-                                    sideButtons[i].addActionListener(new Action() {
-                                        @Override
-                                        public Object getValue(String key) {
-                                            return null;
-                                        }
+                                    /*
+                                    * Вообщем когда мы делаем кнопки из деталей
+                                    * они перехватывают фокус на себя.
+                                    * тем самым сбивают keylistener с tab_panel.
+                                    * код снизу перехватывает фокус кнопок
+                                    * и передает его обратно tab_panel на которой мой keylistener.
+                                    * Саня
+                                    * */
 
-                                        @Override
-                                        public void putValue(String key, Object value) {
+                                    @Override
+                                    public void focusGained(FocusEvent e) {
+                                        tab_panel.grabFocus();
+                                    }
 
-                                        }
+                                    @Override
+                                    public void focusLost(FocusEvent e) {
+                                        tab_panel.grabFocus();
+                                    }
+                                });
 
-                                        @Override
-                                        public void setEnabled(boolean b) {
+                                panel_1.add(sideButtons[i]);
+                                final int val = i;
+                                sideButtons[i].addActionListener(new Action() {
+                                    @Override
+                                    public Object getValue(String key) {
+                                        return null;
+                                    }
 
-                                        }
+                                    @Override
+                                    public void putValue(String key, Object value) {
+                                    }
 
-                                        @Override
-                                        public boolean isEnabled() {
-                                            return false;
-                                        }
+                                    @Override
+                                    public void setEnabled(boolean b) {
+                                    }
 
-                                        @Override
-                                        public void addPropertyChangeListener(PropertyChangeListener listener) {
+                                    @Override
+                                    public boolean isEnabled() {
+                                        return false;
+                                    }
 
-                                        }
+                                    @Override
+                                    public void addPropertyChangeListener(PropertyChangeListener listener) {
+                                    }
 
-                                        @Override
-                                        public void removePropertyChangeListener(PropertyChangeListener listener) {
+                                    @Override
+                                    public void removePropertyChangeListener(PropertyChangeListener listener) {
+                                    }
 
-                                        }
-
-                                        @Override
-                                        public void actionPerformed(ActionEvent e) {
-                                            Gui.panel.setPaintMode(val);
-                                        }
-                                    });
-                                }
-
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        Gui.panel.setPaintMode(val);
+                                    }
+                                });
                             }
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
                         }
-
-
-
-
-
+                    }
                 }
             }
-
-
         });
+    }
 
-	}
-
-	/**
-	 * Getter для получения модели, юзается в PaintPanel
-	 */
-	public static Model getModel() {
-		return Gui.model;
-	}
+    /**
+     * Getter для получения модели, юзается в PaintPanel
+     */
+    public static Model getModel() {
+        return Gui.model;
+    }
 
 
 }
