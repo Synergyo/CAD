@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87ca3d3d-08dd-4228-9f91-31368961b4cc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/sapr/Gui.java" afterPath="$PROJECT_DIR$/src/com/sapr/Gui.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CAD.iws" />
@@ -470,7 +469,11 @@
       <created>1411975766533</created>
       <updated>1411975766533</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Херанул keyLister. Теперь ctrl + O работает">
+      <created>1412060549080</created>
+      <updated>1412060549080</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
