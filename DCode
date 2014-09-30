@@ -1,2 +1,878 @@
-//Дэлфи код ------->
-//
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, ExtCtrls, StdCtrls, ComCtrls;
+
+type
+  TForm1 = class(TForm)
+    MainMenu1: TMainMenu;
+    file1: TMenuItem;
+    open1: TMenuItem;
+    OpenDialog1: TOpenDialog;
+    save1: TMenuItem;
+    SaveDialog1: TSaveDialog;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    GroupBox1: TGroupBox;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+
+    ScrollBox1: TScrollBox;
+    Image2: TImage;
+    Image1: TImage;
+    TabSheet2: TTabSheet;
+    ScrollBox2: TScrollBox;
+    Image3: TImage;
+    ScrollBox3: TScrollBox;
+    Image4: TImage;
+    GroupBox2: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Button6: TButton;
+    Label3: TLabel;
+    Edit3: TEdit;
+
+    procedure open1Click(Sender: TObject);
+    procedure save1Click(Sender: TObject);
+
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure Button2Click(Sender: TObject);
+    procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Image2MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure Image4MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure Image3MouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure Image3MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+  Type P=record
+  Ndet:integer;
+  Xp,Yp,Angl:real;
+  Pr:boolean;
+  end;
+
+
+var
+  Form1: TForm1;
+  SxRozk: array[1..800]of P;
+  xd,yd: array[1..30] of array[0..200] of real; //coords detale
+  namedet: array[1..30] of string[20];
+  colPointdet: array[1..30] of integer;
+  coldet: integer;
+  namemod: string[20];
+  xcdet,ycdet,dldet,shdet,S_det: array [1..30] of real;
+  xcmod,ycmod,dlmod,shmod,mxy,S_mat,Pr_v,Sq_Sumdet: real;
+  numdet: integer;
+  Pr_Change,Pr_btn1,Pr_btn2,Pr_right,Pr_left,Pr_btn3,Pr_btn4, Pr_btn5, Pr_btn6:boolean;
+  nv,nb,ne, dl_mat, sh_mat,k_det:integer;
+  xp,yp,mxy_mat,xp_actF,yp_actF,xp_actE,yp_actE:real;
+   x1,x2,y1,y2:array[0..100] of real;
+
+implementation
+
+{$R *.dfm}
+ Function max(n:integer; Z:array of real):real;
+  var i: integer;
+      maxZ: real;
+    begin
+     maxZ:=z[0];
+     for i:=1 to n-1 do
+     if maxZ < z[i] then maxZ:=z[i];
+     max:=maxZ;
+    end;
+
+ Function min (n:integer; Z:array of real):real;
+  var i: integer;
+      minZ: real;
+    begin
+     minZ:=z[0];
+     for i:=1 to n-1 do
+     if minZ > z[i] then minZ:=z[i];
+     min:=minZ;
+    end;
+
+procedure Graph(n: integer; x,y: array of real; mxy, xcf, ycf, xce, yce: real; p,q: integer);
+ var i: integer;
+     xr,yr: array [0..200] of integer;
+ begin
+  for i:=0 to n-1 do
+    begin
+     xr[i]:= round((x[i]-xcf)*mxy + xce);
+     yr[i]:= round((-y[i]+ycf)*mxy + yce);
+    end;
+  with Form1.Image1.Canvas do
+    begin
+     case p of
+     1: pen.Color:= clRed;
+     2: pen.Color:= clBlue;
+     3: pen.Color:= clGreen;
+     4: pen.Color:= clGray;
+     else pen.Color:= clBlack;
+     end;
+     pen.Width:= q;
+     for i:=0 to n-1 do
+     if i=0 then MoveTo(xr[i], yr[i])
+            else LineTo(xr[i],yr[i]);
+    end;
+ end;
+
+ procedure Graphim3(n: integer; x,y: array of real; mxy, xcf, ycf, xce, yce: real; p,q: integer);
+ var i: integer;
+     xr,yr: array [0..200] of integer;
+ begin
+  for i:=0 to n-1 do
+    begin
+     xr[i]:= round((x[i]-xcf)*mxy + xce);
+     yr[i]:= round((-y[i]+ycf)*mxy + yce);
+    end;
+  with Form1.Image3.Canvas do
+    begin
+     Pen.Mode :=pmCopy;
+     case p of
+     1: pen.Color:= clRed;
+     2: pen.Color:= clBlue;
+     3: pen.Color:= clGreen;
+     4: pen.Color:= clGray;
+     else pen.Color:= clBlack;
+     end;
+     pen.Width:= q;
+     for i:=0 to n-1 do
+     if i=0 then MoveTo(xr[i], yr[i])
+            else LineTo(xr[i],yr[i]);
+    end;
+ end;
+
+
+procedure Kontur(n: integer; x,y: array of real;nb,ne:integer; Var n1,n2:integer; Var x1,x2,y1,y2:array of real);
+Var i:integer;
+begin
+n1:=ne-nb+1;
+for i:=nb to ne do
+begin
+x1[i-nb]:=x[i];
+y1[i-nb]:=y[i];
+end;
+for i:=ne to n-1 do
+begin
+x2[i-ne]:=x[i];
+y2[i-ne]:=y[i];
+end;
+for i:=1 to nb do
+begin
+x2[i+n-ne-1]:=x[i];
+y2[i+n-ne-1]:=y[i];
+end;
+n2:=n+nb-ne;
+end;
+procedure Graphim2(n: integer; x,y: array of real; mxy, xcf, ycf, xce, yce: real; p,q: integer);
+ var i: integer;
+     xr,yr: array [0..200] of integer;
+ begin
+ for i:=0 to n-1 do
+  begin
+   xr[i]:= round((x[i]-xcf)*mxy + xce);
+   yr[i]:= round((-y[i]+ycf)*mxy + yce);
+  end;
+ with Form1.Image2.Canvas do
+   begin
+   case p of
+   1: pen.Color:= clRed;
+   2: pen.Color:= clBlue;
+   3: pen.Color:= clGreen;
+   4: pen.Color:= clGray;
+   else pen.Color:=clBlack;
+   end;
+ pen.Width:= q;
+ for i:=0 to n-1 do
+ if i = 0 then MoveTo(xr[i], yr[i])
+          else LineTo(xr[i],yr[i]);
+    end;
+ end;
+
+ procedure Graphim4(n: integer; x,y: array of real; mxy, xcf, ycf, xce, yce: real; p,q: integer);
+ var i: integer;
+     xr,yr: array [0..200] of integer;
+ begin
+ for i:=0 to n-1 do
+  begin
+   xr[i]:= round((x[i]-xcf)*mxy + xce);
+   yr[i]:= round((-y[i]+ycf)*mxy + yce);
+  end;
+ with Form1.Image4.Canvas do
+   begin
+   case p of
+   1: pen.Color:= clRed;
+   2: pen.Color:= clBlue;
+   3: pen.Color:= clGreen;
+   4: pen.Color:= clGray;
+   else pen.Color:=clBlack;
+   end;
+ pen.Width:= q;
+ for i:=0 to n-1 do
+ if i = 0 then MoveTo(xr[i], yr[i])
+          else LineTo(xr[i],yr[i]);
+    end;
+ end;
+
+
+procedure Square(n:integer; x,y:array of real; var Sq:real);
+var i:integer;
+begin
+Sq:=0;
+for i:=0 to n-1 do
+Sq:=Sq+X[i]*Y[i+1]-X[i+1]*Y[i];
+Sq:=Abs(Sq/2);
+end;
+
+
+procedure TForm1.open1Click(Sender: TObject);
+ var q,namef: string[100];
+     f: system.text;
+     i,j: integer;
+     xmax, ymax, xmin, ymin: array [1..30] of real;
+     maxX, maxY, minX, minY: real;
+     xce,yce: real;
+     mx: real;
+     xr,yr:array [1..5] of integer;
+     xcim2, ycim2:real;
+     xcim4, ycim4:real;
+     dldetmax, shdetmax: real;
+     mxyim2: real;
+     mxyim4: real;
+ begin
+ Form1.Image1.Picture:=nil;
+ Form1.Image2.Picture:=nil;
+  if OpenDialog1.Execute then
+   begin
+    namef:= OpenDialog1.FileName;
+    system.Assign(f,namef);
+    reset(f);
+    readln(f, namemod);
+ //readln(f,q); //schit slygebn. info  +2nd line
+    readln(f, colDet);
+    for i:=1 to colDet do
+    readln(f, namedet[i]);
+    for i:=1 to colDet do
+    readln(f, colPointdet[i]);
+    for i:=1 to colDet do
+    for j:=0 to colPointdet [i]-1 do
+    readln(f, xd[i,j],yd[i,j]);
+    System.Close(f);
+   end;
+ for i:=1 to colDet do
+  begin
+   xmax[i]:= max(colPointDet[1], xd[i]);
+   ymax[i]:= max(colPointDet[1], yd[i]);
+   xmin[i]:= min(colPointDet[1], xd[i]);
+   ymin[i]:= min(colPointDet[1], yd[i]);
+   xcDet[i]:= (xmax[i]+xmin[i])/2;
+   ycDet[i]:= (ymax[i]+ymin[i])/2;
+   dlDet[i]:= xmax[i] - xmin[i];
+   shDet[i]:= ymax[i] - ymin[i];
+   Square(colPointdet[i],xd[i],yd[i],S_det[i]);
+  end;
+ maxX:=xmax[1];
+ maxY:=ymax[1];
+ minX:=xmin[1];
+ minY:=ymin[1];
+ for i:=2 to colDet do
+  begin
+   if maxX < xmax[i] then maxX:= xmax[i];
+   if maxY < ymax[i] then maxY:= ymax[i];
+   if minX > xmin[i] then minX:= xmin[i];
+   if minY > ymin[i] then minY:= ymin[i];
+  end;
+ xcMod:= (maxX + minX)/2;
+ ycMod:= (maxY + minY)/2;
+ dlMod:= maxX - minX;
+ shMod:= maxY - minY;
+ mx:= (Form1.Image1.Width -20)/dlMod;
+ mxy:= (Form1.Image1.Height -20)/ shMod;
+ if mxy > mx then mxy:=mx;
+ xce:=Form1.Image1.Width /2;
+ yce:=Form1.Image1.Height /2;
+ for i:= 1 to colDet do
+ Graph(colPointdet[i],xd[i],yd[i],mxy,xcMod,ycMod,xce,yce,i,i);
+ for i:=1 to coldet do
+  begin
+   if i=1 then dldetmax:=dldet[i]
+          else if dldetmax<dldet[i] then dldetmax:=dldet[i];
+   if i=1 then shdetmax:=shdet[i]
+          else if shdetmax<shdet[i] then shdetmax:=shdet[i];
+  end;
+ if 65/dldetmax<65/shdetmax then mxyim2:=65/dldetmax
+                            else mxyim2:=65/shdetmax;
+
+   if PageControl1.ActivePage = TabSheet1
+   then
+   with Image2.Canvas do
+   begin
+    pen.Color:=clblack;
+    pen.Width:=1;
+
+    for i:=1 to coldet do
+  begin
+   xr[1]:=5; yr[1]:=5+75*(i-1);
+   xr[2]:=75; yr[2]:=yr[1];
+   xr[3]:=xr[2]; yr[3]:=5+70+75*(i-1);
+   xr[4]:=xr[1]; yr[4]:=yr[3];
+   xr[5]:=xr[1]; yr[5]:=yr[1];
+  for j:=1 to 5 do
+    if j=1 then moveto (xr[j],yr[j])
+           else lineto (xr[j],yr[j]);
+    xcim2:=40; ycim2:=40+75*(i-1);
+    Graphim2(colPointdet[i],xd[i],yd[i],mxyim2,xcdet[i],ycdet[i],xcim2,ycim2,i,1);
+   pen.Color := clblack;
+   end;
+   end;
+
+  if PageControl1.ActivePage = TabSheet2
+   then
+   begin
+    for i:=1 to coldet do
+  begin
+   yr[1]:=5; xr[1]:=5+75*(i-1);
+   yr[2]:=75; xr[2]:=xr[1];
+   yr[3]:=yr[2]; xr[3]:=5+70+75*(i-1);
+   yr[4]:=yr[1]; xr[4]:=xr[3];
+   yr[5]:=yr[1]; xr[5]:=xr[1];
+    with Image4.Canvas do
+   begin
+    pen.Color:=clblack;
+    pen.Width:=1;
+    for j:=1 to 5 do
+    if j=1 then moveto (xr[j],yr[j])
+           else lineto (xr[j],yr[j]);
+    ycim4:=40; xcim4:=40+75*(i-1);
+    Graphim4(colPointdet[i],xd[i],yd[i],mxyim2,xcdet[i],ycdet[i],xcim4,ycim4,i,1);
+  end;
+  end;
+
+  end;
+
+end;
+
+procedure TForm1.save1Click(Sender: TObject);
+ var namef: string[100];
+     f: system.text;
+     i,j: integer;
+ begin
+  if SaveDialog1.Execute then
+   begin
+    namef:= SaveDialog1.FileName;
+    system.Assign(f,namef);
+    rewrite(f);
+    writeln(f, namemod);
+ //readln(f,q); //schit slygebn. info  +2nd line
+    writeln(f, colDet);
+    for i:=1 to colDet do
+    writeln(f, namedet[i]);
+    for i:=1 to colDet do
+       writeln(f, colPointdet[i]);
+    for i:=1 to colDet do
+    for j:=0 to colPointdet [i]-1 do
+      writeln(f, xd[i,j]:6:2,'  ',yd[i,j]:6:2);
+    System.Close(f);
+end;
+end;
+
+procedure Elips(xp,yp,r:integer);
+begin
+with Form1.Image1.Canvas do
+begin
+Pen.Color:=clred;
+Ellipse(xp+r,yp+r,xp-r,yp-r);
+end;
+end;
+
+
+
+
+
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+image1.Parent.DoubleBuffered:=True;
+ Pr_Change:=False;
+ Pr_btn1:=False;
+ Pr_btn2:=False;
+ Pr_btn3:=False;
+ Pr_btn4:=False;
+ Pr_btn5:=False;
+ k_det:=0;
+ Sq_Sumdet:=0;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+Pr_btn1:=true;
+Pr_btn2:=false;
+Pr_btn3:=false;
+Pr_btn4:=false;
+Pr_btn5:=false;
+end;
+
+Procedure NumPoint(n:integer; x,y:array of real; xcurF,ycurF:real; Var NPoint:integer);
+Var np,i:integer;
+d,dmin:real;
+begin
+ for i:=0 to n-2 do
+  if i=0 then
+   begin
+    np:=i;
+    dmin:=sqrt(sqr(x[i]-xcurF)+sqr(y[i]-ycurF));
+   end
+   else
+   begin
+    d:=sqrt(sqr(x[i]-xcurF)+sqr(y[i]-ycurF));
+   if d<dmin then
+   begin
+   dmin:=d;
+   np:=i;
+   end;
+   end;
+  NPoint:=np;
+end;
+
+Procedure DelPoint(Var n:integer; Var x,y:array of real; np:integer);
+Var i:integer;
+Begin
+ if nv=0 then
+  begin
+   for i:=0 to n-3 do
+    begin
+     x[i]:=x[i+1];
+     y[i]:=y[i+1];
+    end;
+  x[n-2]:=x[0];
+  y[n-2]:=y[0];
+  end
+ else
+  for i:=nv to n-2 do
+   begin
+    x[i]:=x[i+1];
+    y[i]:=y[i+1];
+   end;
+  n:=n-1;
+end;
+
+procedure NPoint(xa,ya,xb,yb,xc,yc:real; Var x0,y0,d:real; Var f:boolean);
+Var A,B,C,k,t1,t2,q1,q2:real;
+begin
+ f:=false;
+ A:=yb-ya;
+ B:=xa-xb;
+ C:=xb*ya-xa*yb;
+ if (A=0) then
+ begin
+  y0:=-C/B;
+  x0:=xc;
+ end
+ else if (B=0) then
+ begin
+ y0:=yc;
+ x0:=-C/A;
+ end
+ else
+ begin
+  k:=-A/B;
+  x0:=(yc+C/B+xc/k)/(k+1/k);
+  y0:=k*x0-C/B;
+ end;
+ if xa>xb then
+ begin
+ t1:=xb;
+ t2:=xa;
+ end
+ else
+ begin
+ t1:=xa;
+ t2:=xb;
+ end;
+ if ya>yb then
+ begin
+ q1:=yb;
+ q2:=ya;
+ end
+ else
+ begin
+ q1:=ya;
+ q2:=yb;
+ end;
+if (x0>=t1)and(x0<=t2)and(y0>=q1)and(y0<=q2) then
+begin
+f:=true;
+d:=sqrt(sqr(xc-x0)+sqr(yc-y0));
+end;
+end;
+
+procedure NewPoint(Var n:integer; Var x,y:array of real; xc,yc:real;
+ Var x0,y0:real; Var np:integer);
+var i,p,q:integer;
+dmin,d0,xr,yr:real;
+f:boolean;
+begin
+ for i:=0 to n-2 do
+ begin
+ NPoint(x[i],y[i],x[i+1],y[i+1],xc,yc,x0,y0,d0,f);
+ if f then
+ begin
+ dmin:=d0;
+ p:=i;
+ break;
+ end;
+ end;
+ q:=p+1;
+ for i:=q to n-2 do
+ begin
+ NPoint(x[i],y[i],x[i+1],y[i+1],xc,yc,xr,yr,d0,f);
+ if f and (d0<dmin) then
+ begin
+ p:=i;
+ x0:=xr;
+ y0:=yr;
+ dmin:=d0;
+ end;
+ end;
+ np:=p;
+end;
+
+Procedure AddPoint(Var n:integer; Var x,y:array of real; Var np:integer;
+Var x0,y0:real);
+Var i:integer;
+Begin
+ for i:=n-1 downto np+1 do
+    begin
+     x[i+1]:=x[i];
+     y[i+1]:=y[i];
+    end;
+  x[np+1]:=x0;
+  y[np+1]:=y0;
+  n:=n+1;
+end;
+
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+Var xcurF,ycurF:real;
+xce,yce,x0,y0:real;
+i,xr,yr,p,n1,n2:integer;
+
+begin
+xce:=Image1.Width/2;
+yce:=Image1.Height/2;
+if Pr_btn1 then
+ begin
+  xcurF:=(x-Image1.Width/2)/mxy+xcdet[numdet];
+  ycurF:=(Image1.Height/2-y)/mxy+ycdet[numdet];
+  NumPoint(ColPointDet[numdet],xd[numdet],yd[numdet],xcurF,ycurF,nv);
+  Button1.Caption:=IntToStr(nv);
+  DelPoint(ColPointDet[numdet],xd[numdet],yd[numdet],nv);
+  Image1.Picture:=Nil;
+  for i:=0 to colPointdet[numdet]-1 do
+  begin
+  xr:=round((xd[numdet,i]-xcdet[numdet])*mxy+xce);
+  yr:=round((-yd[numdet,i]+ycdet[numdet])*mxy+yce);
+  Elips(xr,yr,4);
+  end;
+  Graph(colPointdet[numdet],xd[numdet],yd[numdet],mxy,xcdet[numdet],ycdet[numdet],xce,yce,numdet,numdet);
+ end;
+if Pr_btn2 then
+ begin
+  if Button=mbLeft then
+  begin
+  Pr_Change:=True;
+  xcurF:=(x-Image1.Width/2)/mxy+xcdet[numdet];
+  ycurF:=(Image1.Height/2-y)/mxy+ycdet[numdet];
+  NumPoint(ColPointDet[numdet],xd[numdet],yd[numdet],xcurF,ycurF,nv);
+  xp:=x;
+  yp:=y;
+  end;
+  if Button=mbRight then
+  begin
+  Pr_Change:=False;
+  Image1.Picture:=Nil;
+  for i:=0 to colPointdet[numdet]-1 do
+  begin
+  xr:=round((xd[numdet,i]-xcdet[numdet])*mxy+xce);
+  yr:=round((-yd[numdet,i]+ycdet[numdet])*mxy+yce);
+  Elips(xr,yr,4);
+  end;
+  Graph(colPointdet[numdet],xd[numdet],yd[numdet],mxy,
+  xcdet[numdet],ycdet[numdet],xce,yce,numdet,numdet);
+  end;
+end;
+if Pr_btn3 then
+ begin
+  xcurF:=(x-Image1.Width/2)/mxy+xcdet[numdet];
+  ycurF:=(Image1.Height/2-y)/mxy+ycdet[numdet];
+//  Button3.Caption:=IntToStr(nv);
+  NewPoint(ColPointDet[numdet],xd[numdet],yd[numdet], xcurF,ycurF,x0,y0,nv);
+  AddPoint(ColPointDet[numdet],xd[numdet],yd[numdet],nv,x0,y0);
+  Image1.Picture:=Nil;
+  for i:=0 to colPointdet[numdet]-1 do
+  begin
+  xr:=round((xd[numdet,i]-xcdet[numdet])*mxy+xce);
+  yr:=round((-yd[numdet,i]+ycdet[numdet])*mxy+yce);
+  Elips(xr,yr,4);
+  end;
+  Graph(colPointdet[numdet],xd[numdet],yd[numdet],mxy,
+  xcdet[numdet],ycdet[numdet],xce,yce,numdet,numdet);
+ end;
+ if Pr_btn4 then
+ begin
+ xcurF:=(x-Image1.Width/2)/mxy+xcdet[numdet];
+  ycurF:=(Image1.Height/2-y)/mxy+ycdet[numdet];
+  if Button=mbLeft then
+  begin
+  Pr_left:=True;
+  NumPoint(ColPointDet[numdet],xd[numdet],yd[numdet],xcurF,ycurF,nb);
+  end;
+    if Button=mbRight then
+  begin
+  Pr_right:=True;
+  NumPoint(ColPointDet[numdet],xd[numdet],yd[numdet],xcurF,ycurF,ne);
+  end;
+  if Pr_left and Pr_right then
+  begin
+  if nb>ne then
+  begin
+  p:=nb;
+  nb:=ne;
+  ne:=p;
+  end;
+   Kontur(ColPointDet[numdet],xd[numdet],yd[numdet], nb,ne,n1,n2, x1,x2,y1,y2);
+ Graph(n1,x1,y1,mxy,xcdet[numdet],ycdet[numdet],xce,yce,1,4);
+ Graph(n2,x2,y2,mxy,xcdet[numdet],ycdet[numdet],xce,yce,2,4);
+ Pr_left:=false;
+  Pr_right:=false;
+  end;
+  end;
+  end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+Pr_btn2:=true;
+Pr_btn1:=false;
+Pr_btn3:=false;
+Pr_btn4:=false;
+Pr_btn5:=false;
+end;
+
+procedure ChangePoint(n:integer; Var x,y:array of real; x0,y0:real; np:integer);
+begin
+if np=n-1 then
+np:=0;
+x[np]:=x0;
+y[np]:=y0;
+if np=0 then
+begin
+x[n-1]:=x0;
+y[n-1]:=y0;
+end;
+end;
+
+procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+var xce,yce,xcurF,ycurF:real;
+xr,yr,i:integer;
+begin
+xce:=Image1.Width/2;
+yce:=Image1.Height/2;
+  if Pr_change then
+   begin
+    if (xp<>x) or (yp<>y) then
+     begin
+      xcurF:=(x-Image1.Width/2)/mxy+xcdet[numdet];
+      ycurF:=(Image1.Height/2-y)/mxy+ycdet[numdet];
+      Image1.Picture:=Nil;
+      for i:=0 to colPointdet[numdet]-1 do
+      begin
+      xr:=round((xd[numdet,i]-xcdet[numdet])*mxy+xce);
+      yr:=round((-yd[numdet,i]+ycdet[numdet])*mxy+yce);
+      Elips(xr,yr,4);
+      end;
+      ChangePoint(colPointdet[numdet],xd[numdet],yd[numdet],xcurF,ycurF,nv);
+      Graph(colPointdet[numdet],xd[numdet],yd[numdet],mxy,xcdet[numdet],ycdet[numdet],xce,yce,numdet,numdet);
+     end;
+   end;
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+Pr_btn3:=true;
+Pr_btn1:=false;
+Pr_btn2:=false;
+Pr_btn4:=false;
+Pr_btn5:=false;
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+Pr_left:=false;
+Pr_right:=false;
+Pr_btn4:=true;
+Pr_btn1:=false;
+Pr_btn2:=false;
+Pr_btn3:=false;
+Pr_btn5:=false;
+Pr_btn6:=false;
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+Pr_btn6:=True;
+Pr_btn1:=false;
+Pr_btn2:=false;
+Pr_btn3:=false;
+Pr_btn4:=false;
+Pr_btn5:=false;
+dl_mat:=strtoint(edit1.Text);
+sh_mat:=strtoint(edit2.Text);
+mxy_mat:=image3.Height/sh_mat;
+S_mat:=dl_mat*sh_mat;
+
+
+Image3.Width :=round(dl_mat*mxy_mat);
+Image3.Picture :=nil;
+
+
+end;
+
+
+
+procedure TForm1.Image2MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var   xce, yce, mx, my: real;
+ xr,yr,i:integer;
+ begin
+  xce:=Form1.Image1.Width /2;
+  yce:=Form1.Image1.Height /2;
+  numdet:=y div 75+1;
+  Form1.Image1.Picture:=Nil;
+  mx:=(Form1.Image1.Width-20)/dldet[numdet];
+  my:=(Form1.Image1.Height-20)/shdet[numdet];
+  if mx<my then mxy:=mx
+           else mxy:=my;
+  for i:=0 to colPointdet[numdet]-1 do
+  begin
+  xr:=round((xd[numdet,i]-xcdet[numdet])*mxy+xce);
+  yr:=round((-yd[numdet,i]+ycdet[numdet])*mxy+yce);
+  Elips(xr,yr,4);
+  end;
+  Graph(colPointdet[numdet],xd[numdet],yd[numdet],mxy,xcdet[numdet],ycdet[numdet],xce,yce,numdet,numdet);
+ end;
+
+
+ procedure Graphim3_move(n: integer; x,y: array of real; mxy, xcf, ycf, xce, yce: real; p,q: integer);
+  var i: integer;
+     xr,yr: array [0..200] of integer;
+ begin
+  for i:=0 to n-1 do
+    begin
+     xr[i]:= round((x[i]-xcf)*mxy + xce);
+     yr[i]:= round((-y[i]+ycf)*mxy + yce);
+    end;
+  with Form1.Image3.Canvas do
+    begin
+      Pen.Mode :=pmXOR;
+     case p of
+     1: pen.Color:= clRed;
+     2: pen.Color:= clBlue;
+     3: pen.Color:= clGreen;
+     4: pen.Color:= clGray;
+     else pen.Color:= clBlack;
+     end;
+     pen.Width:= q;
+     for i:=0 to n-1 do
+     if i=0 then MoveTo(xr[i], yr[i])
+            else LineTo(xr[i],yr[i]);
+    end;
+ end;
+
+
+
+procedure TForm1.Image4MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var   xce, yce, mx, my: real;
+ xr,yr,i:integer;
+ begin
+  xce:=Form1.Image1.Width /2;
+  yce:=Form1.Image1.Height /2;
+  numdet:=x div 75+1;
+  xp_actE:=100;
+  yp_actE:=100;
+  //Graphim3_move(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
+  Graphim3_move(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
+
+ end;
+
+
+
+procedure TForm1.Image3MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  with Image3.Canvas do
+  begin
+
+  if (x<>xp_actE) or (y<>yp_actE) then
+  begin
+
+    Graphim3_move(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
+    // Graphim3_move(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
+   xp_actE:=x;
+   yp_actE:=y;
+   Graphim3_move(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
+  end;
+  end;
+end;
+
+procedure TForm1.Image3MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+  var PV:String[5];
+begin
+   Graphim3(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
+    k_det:=k_det+1;
+    Sq_Sumdet:=Sq_Sumdet+S_det[numdet];
+    Pr_v:=Sq_Sumdet/S_mat*100;
+    STR(Pr_v:5:2,PV);
+    edit3.Text := PV;
+
+    with SxRozk[K_det]do
+    begin
+    Ndet:=numdet;
+    Xp:=(X-xp_actE)/mxy;
+    Yp:=-(Y-yp_actE)/mxy;
+    Angl:=0;
+    Pr:=true;
+
+    end;
+   end;
+
+
+
+
+end.
