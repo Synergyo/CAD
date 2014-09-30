@@ -473,7 +473,11 @@
       <created>1412060549080</created>
       <updated>1412060549080</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Пофиксил баг с открытием. См. комменты в коде">
+      <created>1412060590308</created>
+      <updated>1412060590308</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -526,7 +530,8 @@
     <MESSAGE value="Диалоговое окно выбора файла, LookAndFeel, наброски панели рисования" />
     <MESSAGE value="Отрисовка всей модели" />
     <MESSAGE value="Херанул keyLister. Теперь ctrl + O работает" />
-    <option name="LAST_COMMIT_MESSAGE" value="Херанул keyLister. Теперь ctrl + O работает" />
+    <MESSAGE value="Пофиксил баг с открытием. См. комменты в коде" />
+    <option name="LAST_COMMIT_MESSAGE" value="Пофиксил баг с открытием. См. комменты в коде" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
