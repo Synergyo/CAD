@@ -185,7 +185,31 @@ public class Gui extends JFrame {
                         sideButtons = new DetailBox[model.numDetails];
 
                         for(int i = 0; i < model.numDetails; i++) {
+
                             sideButtons[i] = new DetailBox(i);
+
+                            sideButtons[i].addFocusListener(new FocusListener() {
+
+                                    /*
+                                    * Вообщем когда мы делаем кнопки из деталей
+                                    * они перехватывают фокус на себя.
+                                    * тем самым сбивают keylistener с tab_panel.
+                                    * код снизу перехватывает фокус кнопок
+                                    * и передает его обратно tab_panel на которой мой keylistener.
+                                    * Саня
+                                    * */
+
+                                @Override
+                                public void focusGained(FocusEvent e) {
+                                    tab_panel.grabFocus();
+                                }
+
+                                @Override
+                                public void focusLost(FocusEvent e) {
+                                    tab_panel.grabFocus();
+                                }
+                            });
+
                             panel_1.add(sideButtons[i]);
                             final int val = i;
                             sideButtons[i].addActionListener(new Action() {
