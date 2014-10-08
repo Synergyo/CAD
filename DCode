@@ -39,6 +39,8 @@ type
     Button6: TButton;
     Label3: TLabel;
     Edit3: TEdit;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
 
     procedure open1Click(Sender: TObject);
     procedure save1Click(Sender: TObject);
@@ -90,6 +92,7 @@ var
   nv,nb,ne, dl_mat, sh_mat,k_det:integer;
   xp,yp,mxy_mat,xp_actF,yp_actF,xp_actE,yp_actE:real;
    x1,x2,y1,y2:array[0..100] of real;
+   xmax, ymax, xmin, ymin: array [1..30] of real;
 
 implementation
 
@@ -252,7 +255,7 @@ procedure TForm1.open1Click(Sender: TObject);
  var q,namef: string[100];
      f: system.text;
      i,j: integer;
-     xmax, ymax, xmin, ymin: array [1..30] of real;
+
      maxX, maxY, minX, minY: real;
      xce,yce: real;
      mx: real;
@@ -323,6 +326,7 @@ procedure TForm1.open1Click(Sender: TObject);
    if i=1 then shdetmax:=shdet[i]
           else if shdetmax<shdet[i] then shdetmax:=shdet[i];
   end;
+
  if 65/dldetmax<65/shdetmax then mxyim2:=65/dldetmax
                             else mxyim2:=65/shdetmax;
 
@@ -370,7 +374,16 @@ procedure TForm1.open1Click(Sender: TObject);
     Graphim4(colPointdet[i],xd[i],yd[i],mxyim2,xcdet[i],ycdet[i],xcim4,ycim4,i,1);
   end;
   end;
-
+  for i:=1 to colDet do
+   for j:=0 to colPointdet [i]-1 do
+  begin
+     xd[i,j]:= xd[i,j]-xcdet[i];
+     yd[i,j]:= yd[i,j]-ycdet[i];
+     xmin[i]:= -dlDet[i]/2;
+     ymin[i]:= -shDet[i]/2;
+     xmax[i]:= dlDet[i]/2;
+     ymax[i]:= shDet[i]/2;
+   end;
   end;
 
 end;
@@ -820,6 +833,8 @@ procedure TForm1.Image4MouseDown(Sender: TObject; Button: TMouseButton;
 var   xce, yce, mx, my: real;
  xr,yr,i:integer;
  begin
+ if RadioButton1.Checked then
+ begin
   xce:=Form1.Image1.Width /2;
   yce:=Form1.Image1.Height /2;
   numdet:=x div 75+1;
@@ -827,7 +842,7 @@ var   xce, yce, mx, my: real;
   yp_actE:=100;
   //Graphim3_move(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
   Graphim3_move(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
-
+ end;
  end;
 
 
@@ -835,9 +850,13 @@ var   xce, yce, mx, my: real;
 procedure TForm1.Image3MouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
+  if RadioButton1.Checked and Pr_btn6 then
   with Image3.Canvas do
   begin
-
+  if (x<ABS(xmin[numdet])*mxy_mat) then x:=round(ABS(xmin[numdet])*mxy_mat);
+  if (x>(dl_mat-xmax[numdet])*mxy_mat) then x:=round((dl_mat-xmax[numdet])*mxy_mat);
+  if (y<ABS(ymin[numdet])*mxy_mat) then y:=round(ABS(ymin[numdet])*mxy_mat);
+  if (y>(sh_mat-ymax[numdet])*mxy_mat) then y:=round((sh_mat-ymax[numdet])*mxy_mat);
   if (x<>xp_actE) or (y<>yp_actE) then
   begin
 
@@ -854,6 +873,8 @@ procedure TForm1.Image3MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
   var PV:String[5];
 begin
+  if RadioButton1.Checked then
+  begin
    Graphim3(colPointdet[numdet],xd[numdet],yd[numdet],mxy_mat,0,0,xp_actE,yp_actE,numdet,1);
     k_det:=k_det+1;
     Sq_Sumdet:=Sq_Sumdet+S_det[numdet];
@@ -868,7 +889,7 @@ begin
     Yp:=-(Y-yp_actE)/mxy;
     Angl:=0;
     Pr:=true;
-
+    end;
     end;
    end;
 
